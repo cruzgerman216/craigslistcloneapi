@@ -1,12 +1,8 @@
 class Navbar {
-    hide(){
-        document.querySelector(".navigator").style.display = "none";
+    constructor(){
+        this.render();
+        this.addEventListener();
     }
-
-    show(){
-        document.querySelector(".navigator").style.display = "block";
-    }
-
     render(){
         document.body.innerHTML = "";
         let div;
@@ -40,38 +36,21 @@ class Navbar {
          </div>
         `
         }
-        div.querySelector("#logout").addEventListener('click', this.logout);
-        div.querySelector("#homenav").addEventListener('click', this.clickHome);
 
+
+    }
+
+    addEventListener(){
+        document.querySelector("#logout").addEventListener('click', this.logout);
+        document.querySelector("#homenav").addEventListener('click', this.clickHome);
     }
 
     logout = () =>{
         this.clickHome()
-        document.getElementById("logout").style.display = "none";
         userstate.logout();
       }
 
-      clickHome = () => {
+    clickHome = () => {
         new Home();
-        // let user_account = document.querySelector("#user_account");
-        // let post_forms = document.querySelector("#post_forms");
-        // if(post_forms){
-        //     post_forms.style.display = 'none';
-        // }
-        // let sessionforms = document.getElementById("sessionforms");
-        // if(sessionforms){
-        //     sessionforms.style.display = "none";
-        // }
-        // let createpost = document.querySelector(".createpost");
-        // if(createpost){
-        //     createpost = document.querySelector(".createpost").innerText = "";
-        // }
-        // document.getElementById("post").style.display = 'none';
-        // document.getElementById("getpost").innerHTML = "";
-        // document.getElementById("getpost").style.display = "none";
-        // document.getElementById("myposts").innerHTML= "";
-        
-        // user_account.style.display = 'none';
-        // this.hide();
-      }
+    }
 }
