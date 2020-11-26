@@ -295,6 +295,7 @@ class Home {
   }
 
   getlocation(){
+    console.log(userstate.islogin())
     if(userstate.islogin() || userstate.city != ""){
       document.getElementById("header").innerHTML = userstate.city; 
     }else{

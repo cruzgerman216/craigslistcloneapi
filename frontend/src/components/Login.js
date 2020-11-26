@@ -1,18 +1,12 @@
 class Login{
     render(){
+      document.body.innerHTML = "";
+      new Navbar();
 
-        nav.render();
-        nav.show();
-        let div;
-
-        if(document.querySelector("#sessionforms")){
-            document.getElementById("sessionforms").style.display = "block";
-        }else{
-            div = document.createElement("div");
+            let div = document.createElement("div");
             div.classList.add("container");
             div.setAttribute("id", "sessionforms")
             document.body.append(div);
-            console.log(div)
             div.innerHTML +=
             `
             <div class="mainlogin">
@@ -63,8 +57,6 @@ class Login{
             </form>
           </div>
             `
-        }
-        document.getElementById("sessionforms").style.display = "block";
         let usersForm = document.getElementById("login-form");
         let signupForm = document.getElementById("signup-form");
         signupForm.addEventListener("submit", this.userFormSubmission)
@@ -91,10 +83,10 @@ class Login{
             sessionStorage.setItem("email", `${user.email}`);
             sessionStorage.setItem("city", `${user.city}`);
             sessionStorage.setItem("id", `${user.id}`);
-            document.getElementById("logout").style.display = "none";
-            document.getElementById("header").innerHTML = user.city; 
+            // document.getElementById("logout").style.display = "none";
+            // document.getElementById("header").innerHTML = user.city; 
             nav.clickHome();
-        document.getElementById("sessionforms").style.display = "none";
+        // document.getElementById("sessionforms").style.display = "none";
 
           }
         })

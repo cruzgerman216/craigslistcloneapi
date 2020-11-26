@@ -3,6 +3,7 @@ class Navbar {
         this.render();
         this.addEventListener();
     }
+    
     render(){
         document.body.innerHTML = "";
         let div;
@@ -36,8 +37,6 @@ class Navbar {
          </div>
         `
         }
-
-
     }
 
     addEventListener(){
