@@ -8,6 +8,7 @@ class Navbar {
     }
 
     render(){
+        document.body.innerHTML = "";
         let div;
         if(document.querySelector(".navigator")){
             div = document.querySelector(".navigator")
@@ -51,28 +52,26 @@ class Navbar {
       }
 
       clickHome = () => {
-        homepage.render();
-        let user_account = document.querySelector("#user_account");
-        let post_forms = document.querySelector("#post_forms");
-        if(post_forms){
-            post_forms.style.display = 'none';
-        }
-        let sessionforms = document.getElementById("sessionforms");
-        if(sessionforms){
-            sessionforms.style.display = "none";
-        }
-        document.getElementById("mainposts").style.display = "none";
-        document.getElementById("posts").innerHTML = ``;
-        let createpost = document.querySelector(".createpost");
-        if(createpost){
-            createpost = document.querySelector(".createpost").innerText = "";
-        }
-        document.getElementById("post").style.display = 'none';
-        document.getElementById("getpost").innerHTML = "";
-        document.getElementById("getpost").style.display = "none";
-        document.getElementById("myposts").innerHTML= "";
+        new Home();
+        // let user_account = document.querySelector("#user_account");
+        // let post_forms = document.querySelector("#post_forms");
+        // if(post_forms){
+        //     post_forms.style.display = 'none';
+        // }
+        // let sessionforms = document.getElementById("sessionforms");
+        // if(sessionforms){
+        //     sessionforms.style.display = "none";
+        // }
+        // let createpost = document.querySelector(".createpost");
+        // if(createpost){
+        //     createpost = document.querySelector(".createpost").innerText = "";
+        // }
+        // document.getElementById("post").style.display = 'none';
+        // document.getElementById("getpost").innerHTML = "";
+        // document.getElementById("getpost").style.display = "none";
+        // document.getElementById("myposts").innerHTML= "";
         
-        user_account.style.display = 'none';
-        this.hide();
+        // user_account.style.display = 'none';
+        // this.hide();
       }
 }

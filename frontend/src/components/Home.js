@@ -1,92 +1,11 @@
 class Home {
-    hide(){
-      let main = document.querySelector('.main');
-      main.style.display = 'none';
-    }
-
-    show(){
-      let main = document.querySelector('.main');
-      main.style.display = 'block';
-    }
-    
-    addEventListeners(){
-      document.getElementById("myaccount").addEventListener("click",()=>{
-      homepage.hide();
-      if(userstate.islogin()){
-        userstate.renderMyAccount();
-      }else{
-        let login = new Login;
-        login.render();
-      }
-      })
-    }
-
-    getlocation(){
-      if(userstate.islogin() || userstate.city != ""){
-        document.getElementById("header").innerHTML = userstate.city; 
-      }else{
-        const sucessfulLookup =  (position) => {
-          const { latitude, longitude} = position.coords; 
-          api.fetchLocation(latitude, longitude)
-          .then(location =>  {
-            userstate.city = location.results[0].formatted.split(",")[1].substring(1);
-            document.getElementById("header").innerHTML = location.results[0].formatted.split(",")[1].substring(1); 
-          })
-        };
-        navigator.geolocation.getCurrentPosition(sucessfulLookup)
-      }
-    }
-
-    displayCalendar(){
-      let dated = new Date();
-      let firstDayy = new Date(dated.getFullYear(), dated.getMonth(), 1);
-      let day_of_week = firstDayy.getDay(); 
-      let calendar_days = [];
-      if(day_of_week == 0){
-        for(let i = day_of_week+2; i < 30;i++){
-          calendar_days.push(i);
-        }
-      }
-    
-      let div = document.getElementById("calendar");
-      let getcol = ``;
-      for(let i=1; i<29; i++){
-        getcol += 
-          `
-              <div class="col-1" >
-              ${calendar_days[i-1]}
-            </div>
-          `
-        if(i%7 == 0){
-          div.innerHTML += 
-          `
-            <div class="row">
-              ${getcol}
-            </div>
-          `
-          getcol = ``;
-        }
-    
-      }
-    
-      let getcal = `
-      <div class="row">
-        <div class="col-1">M</div>
-        <div class="col-1">T</div>
-        <div class="col-1">W</div>
-        <div class="col-1">T</div>
-        <div class="col-1">F</div>
-        <div class="col-1">S</div>
-        <div class="col-1">S</div>
-      </div>
-    
-      `;
-    
-      getcal += div.innerHTML; 
-      div.innerHTML = getcal;
-    }
+  constructor(){
+    this.render();
+    this.addEventListeners();
+  }
 
     render(){
+      document.body.innerHTML = "";
       
         let main = 
         `
@@ -247,16 +166,11 @@ class Home {
       </div>
         `
 
-        document.body.innerHTML = main + document.body.innerHTML;
-        this.addEventListeners();
+        document.body.innerHTML = main;
         this.displayCalendar();
         this.getlocation();
         this.getCategories();
 
-        document.getElementById("homecreatepost").addEventListener("click", ()=>{
-          let post = new PostForm;
-          post.render();
-        })
     }
 
     getCategories = () => {
@@ -364,6 +278,87 @@ class Home {
       });
 
   }
+  addEventListeners(){
+    document.getElementById("myaccount").addEventListener("click",()=>{
+    if(userstate.islogin()){
+      userstate.renderMyAccount();
+    }else{
+      let login = new Login;
+      login.render();
+    }
+    })
+
+    document.getElementById("homecreatepost").addEventListener("click", ()=>{
+      let post = new PostForm;
+      post.render();
+    })
+  }
+
+  getlocation(){
+    if(userstate.islogin() || userstate.city != ""){
+      document.getElementById("header").innerHTML = userstate.city; 
+    }else{
+      const sucessfulLookup =  (position) => {
+        const { latitude, longitude} = position.coords; 
+        api.fetchLocation(latitude, longitude)
+        .then(location =>  {
+          userstate.city = location.results[0].formatted.split(",")[1].substring(1);
+          document.getElementById("header").innerHTML = location.results[0].formatted.split(",")[1].substring(1); 
+        })
+      };
+      navigator.geolocation.getCurrentPosition(sucessfulLookup)
+    }
+  }
+
+  displayCalendar(){
+    let dated = new Date();
+    let firstDayy = new Date(dated.getFullYear(), dated.getMonth(), 1);
+    let day_of_week = firstDayy.getDay(); 
+    let calendar_days = [];
+    if(day_of_week == 0){
+      for(let i = day_of_week+2; i < 30;i++){
+        calendar_days.push(i);
+      }
+    }
+  
+    let div = document.getElementById("calendar");
+    let getcol = ``;
+    for(let i=1; i<29; i++){
+      getcol += 
+        `
+            <div class="col-1" >
+            ${calendar_days[i-1]}
+          </div>
+        `
+      if(i%7 == 0){
+        div.innerHTML += 
+        `
+          <div class="row">
+            ${getcol}
+          </div>
+        `
+        getcol = ``;
+      }
+  
+    }
+  
+    let getcal = `
+    <div class="row">
+      <div class="col-1">M</div>
+      <div class="col-1">T</div>
+      <div class="col-1">W</div>
+      <div class="col-1">T</div>
+      <div class="col-1">F</div>
+      <div class="col-1">S</div>
+      <div class="col-1">S</div>
+    </div>
+  
+    `;
+  
+    getcal += div.innerHTML; 
+    div.innerHTML = getcal;
+  }
+
 
     clickCategory(){
       document.getElementById("categories").addEventListener("click", function(event){
@@ -392,4 +387,5 @@ class Home {
         return 0;
       });
     }
+
 }
