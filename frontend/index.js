@@ -10,5 +10,4 @@ const api = new ApiService(BASE_URL);
 // const is hoisted so it is fine to use this api instance as throughout each
 // js file as it is within scope 
 var userstate = new User(sessionStorage);
-// var nav = new Navbar();
 new Home();

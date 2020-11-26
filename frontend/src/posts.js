@@ -6,13 +6,15 @@ class Post {
   }
 
   displaypost(postid = event.target.attributes["data-id"].value){
+    document.body.innerHTML = "";
+    new Navbar();
+    let div = document.createElement("div");
+    div.setAttribute("id", "post")
+    document.body.append(div);
+    let getpost = document.createElement("div");
+    getpost.setAttribute("id", "getpost")
+    div.append(getpost);
 
-    let display_posts = document.getElementById("post");
-    display_posts.style.display = "block"
-    let getpost = document.getElementById("getpost");
-    let mainposts = document.getElementById("mainposts");
-    document.getElementById("user_account").style.display = "none"
-    mainposts.style.display = "none"
     api.fetchPost(postid)
     .then((post) => {
       getpost.style.display = "block";
