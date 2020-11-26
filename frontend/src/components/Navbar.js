@@ -3,7 +3,7 @@ class Navbar {
         this.render();
         this.addEventListener();
     }
-    
+
     render(){
         document.body.innerHTML = "";
         let div;
@@ -23,6 +23,7 @@ class Navbar {
         }
 
         if(userstate.islogin()){
+            console.log("truue")
             div.innerHTML = `
                 <span id="homenav" class="navlink"style="bored: 1px solid black; border-radius: 100%; padding:3px;background-color:white;cursor:pointer"  ">CL</span> >
                 <span id="navtext" class="navlink">${userstate.email}</span>

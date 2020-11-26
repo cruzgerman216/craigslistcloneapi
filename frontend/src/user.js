@@ -26,12 +26,49 @@ class User {
 
   renderMyAccount(){
     let post = new Post;
-    let user_account = document.querySelector("#user_account");
-    user_account.style.display = 'block';
-    nav.render();
-    nav.show();
-    let myposts = document.getElementById("myposts");
+    
+
+    document.body.innerHTML = ``;
+    new Navbar(); 
+    let div = document.createElement("div");
+    div.classList.add("useraccount");
+    div.setAttribute("id", "user_account")
+    // reason for appending div is due to not creating the body of content
+    // that way, each event listener isn't removed
+    document.body.append(div);
+    div.innerHTML += 
+    `
+    <fieldset class="field" >
+      <legend style="font-size: .95em">( page: 1 )</legend>
+      <div class="tablepost">
+        <div >
+          <div class="row adjustable" >
+            <div class="col-1" style="border-radius: 4px; background-color: #ffffff; border: 1px solid #aaaaaa">
+              status
+            </div>
+            <div class="col-3 tabelepostheader">
+              manage
+            </div>
+            <div class="col-5 tabelepostheader">
+              posting title
+            </div>
+
+            <div class="col-2 tabelepostheader">
+              posted date
+            </div>
+
+            <div class="col-1 tabelepostheader">
+              id
+            </div>
+          </div>
+          <div id="myposts" class="posts">
+          </div>
+        </div>
+      </div>
+    </fieldset> 
+    `;
     api.fetchUserPosts(sessionStorage.id).then((posts)=>{
+      let myposts = document.getElementById("myposts")
       myposts.innerHTML = "";
       for(let i = 0; i < posts.length; i++){
         myposts.innerHTML += 
@@ -61,7 +98,6 @@ class User {
     })
     myposts.addEventListener("click", (event)=>{
       if(event.target.attributes["data-id"]){
-        console.log(event.target.attributes["data-id"].value);
         if(event.target.attributes["name"].value =="delete"){
           post.deletepost(event.target.attributes["data-id"].value)
         }else if(event.target.attributes["name"].value =="display"){
@@ -72,4 +108,5 @@ class User {
     })
 
   }
+  
 }
