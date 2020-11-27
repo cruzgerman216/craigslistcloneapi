@@ -64,13 +64,48 @@ class Post {
   }
 
    displayposts(name, posts){
-    nav.render();
-    nav.show();
-    let elem = document.querySelector(".main");
-    elem.style.display = 'none';
-  
-    let display_posts = document.getElementById("mainposts");
-    display_posts.style.display = "block";
+    document.body.innerHTML = "";
+    new Navbar();
+    let div = document.createElement("div");
+    div.setAttribute("id", "mainposts")
+    document.body.append(div);
+
+    div.innerHTML = `
+    
+    <div id="mainposts" >
+    <a name="top"><a>
+    <form id="search" class="searchnav">
+      <input id="searchinput" type="text" style="width:55%; color:#969494;font-size:1.3em" placeholder="search" class="button">
+      <button class="button" ><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill-rule="evenodd" d="M14.53 15.59a8.25 8.25 0 111.06-1.06l5.69 5.69a.75.75 0 11-1.06 1.06l-5.69-5.69zM2.5 9.25a6.75 6.75 0 1111.74 4.547.746.746 0 00-.443.442A6.75 6.75 0 012.5 9.25z"></path></svg></button>
+    </form>
+
+    <div class="sidenav">
+
+      <div id="sidenavname" class="link">
+      </div>
+      <form>
+        <input type="checkbox" id="titlesonly" name="titlesonly" value="titles">
+        <label for="titlesonly">search titles only</label><br>
+
+        <input type="checkbox" id="hasimage" name="hasimage" value="hasimage">
+        <label for="hasimage">has image</label><br>
+
+        <input type="checkbox" id="posttoday" name="posttoday" value="posttoday">
+        <label for="posttoday">posted today</label><br>
+
+        <input type="checkbox" id="bundleduplicates" name="bundleduplicates" value="bundleduplicates">
+        <label for="bundleduplicates">bundle duplicates</label><br>
+
+        <input type="checkbox" id="areas" name="areas" value="areas">
+        <label for="areas">include nearby areas</label><br>
+        <button class="button link">reset</button>
+        <button class="button link">update saerch</button> 
+      </form>
+    </div>
+    <div class="sidecontent" id="posts">
+    </div>
+  </div>`
+
     document.getElementById("sidenavname").innerHTML = name;
     document.getElementById("searchinput").placeholder = `search ${name}`;
     
