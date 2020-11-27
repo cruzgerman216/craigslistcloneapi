@@ -83,11 +83,6 @@ class Login{
             sessionStorage.setItem("email", `${user.email}`);
             sessionStorage.setItem("city", `${user.city}`);
             sessionStorage.setItem("id", `${user.id}`);
-            // document.getElementById("logout").style.display = "none";
-            // document.getElementById("header").innerHTML = user.city; 
-            nav.clickHome();
-        // document.getElementById("sessionforms").style.display = "none";
-
           }
         })
       }

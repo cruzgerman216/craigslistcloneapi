@@ -1,25 +1,22 @@
 class PostForm{
-
     render(){
-        homepage.hide();
         if(userstate.islogin()){
-          nav.render();
-          nav.show();
-            if(document.querySelector("#post_forms")){
-                document.getElementById("post_forms").style.display = "block";
-            }else{
+          document.body.innerHTML = "";
+              new Navbar();
                 let div = document.createElement("div");
                 div.classList.add("container");
                 div.classList.add("createpost");
                 document.body.append(div);
                 div.setAttribute("id", "post_forms")
-
-            }
         }else{
           let login = new Login;
           login.render();
           return;
         }
+
+
+
+        
         document.getElementById("post_forms").innerHTML +=
         `
         <form id="create-post-1">
