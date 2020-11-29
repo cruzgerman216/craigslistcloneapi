@@ -167,6 +167,21 @@ class Home {
         `
 
         document.body.innerHTML = main;
+        let div = document.createElement("div");
+        div.classList.add("footer");
+        document.body.append(div);
+
+        div.innerHTML += 
+        `
+        <div class="footer" >@2020 craigslist 
+        <a class="footerlinks" href="#">help</a> 
+        <a class="footerlinks" href="#">privacy</a>
+        <a class="footerlinks" href="#">feedack</a>
+        <a class="footerlinks" href="#">terms</a>
+        <a class="footerlinks" href="#">about</a>
+        <a class="footerlinks" href="#">mobile</a>
+      </div>
+        `
         this.displayCalendar();
         this.getlocation();
         this.getCategories();

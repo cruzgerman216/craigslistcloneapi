@@ -57,6 +57,22 @@ class Login{
             </form>
           </div>
             `
+
+            div = document.createElement("div");
+            div.classList.add("footer");
+            document.body.append(div);
+    
+            div.innerHTML += 
+            `
+            <div class="footer" >@2020 craigslist 
+            <a class="footerlinks" href="#">help</a> 
+            <a class="footerlinks" href="#">privacy</a>
+            <a class="footerlinks" href="#">feedack</a>
+            <a class="footerlinks" href="#">terms</a>
+            <a class="footerlinks" href="#">about</a>
+            <a class="footerlinks" href="#">mobile</a>
+          </div>
+            `
         let usersForm = document.getElementById("login-form");
         let signupForm = document.getElementById("signup-form");
         signupForm.addEventListener("submit", this.userFormSubmission)
@@ -83,6 +99,7 @@ class Login{
             sessionStorage.setItem("email", `${user.email}`);
             sessionStorage.setItem("city", `${user.city}`);
             sessionStorage.setItem("id", `${user.id}`);
+            userstate.renderMyAccount();
           }
         })
       }
@@ -104,7 +121,7 @@ class Login{
           sessionStorage.setItem("city", `${u.city}`);
           sessionStorage.setItem("id", `${u.id}`);
       
-          u.renderUser();
+          u.renderMyAccount();
         })
       }
 }

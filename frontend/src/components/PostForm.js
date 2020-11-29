@@ -1,23 +1,20 @@
 class PostForm{
     render(){
-        if(userstate.islogin()){
-          document.body.innerHTML = "";
-              new Navbar();
-                let div = document.createElement("div");
-                div.classList.add("container");
-                div.classList.add("createpost");
-                document.body.append(div);
-                div.setAttribute("id", "post_forms")
-        }else{
+        if(!userstate.islogin()){
           let login = new Login;
           login.render();
           return;
         }
 
+        document.body.innerHTML = "";
+        new Navbar();
+          let div = document.createElement("div");
+          div.classList.add("container");
+          div.classList.add("createpost");
+          document.body.append(div);
+          div.setAttribute("id", "post_forms")
 
-
-        
-        document.getElementById("post_forms").innerHTML +=
+        div.innerHTML =
         `
         <form id="create-post-1">
         <p>please limit each posting to a single area and category, once per 48 hours</p>
@@ -57,6 +54,21 @@ class PostForm{
         <label for="posting">event / class</label><br>
         <input type="submit" value="continue">
         </form>
+        `
+         div = document.createElement("div");
+        div.classList.add("footer");
+        document.body.append(div);
+
+        div.innerHTML += 
+        `
+        <div class="footer" >@2020 craigslist 
+        <a class="footerlinks" href="#">help</a> 
+        <a class="footerlinks" href="#">privacy</a>
+        <a class="footerlinks" href="#">feedack</a>
+        <a class="footerlinks" href="#">terms</a>
+        <a class="footerlinks" href="#">about</a>
+        <a class="footerlinks" href="#">mobile</a>
+      </div>
         `
         let form1 = document.querySelector("#create-post-1");
         form1.addEventListener("submit", this.TypeOfPosting)
