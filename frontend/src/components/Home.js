@@ -197,8 +197,6 @@ class Home {
         let j = 0;
        let community_div;
         for (let i = 0;i < categories.length-1; i++ ){
-    
-          // setting up headers
           if(categories[i].parent_id == null){
             let div = document.getElementById(`column-1-${categories[i].id}`);
             div.innerHTML += 
@@ -295,8 +293,8 @@ class Home {
   }
   addEventListeners(){
     document.getElementById("myaccount").addEventListener("click",()=>{
-    if(userstate.islogin()){
-      userstate.renderMyAccount();
+    if(state.userstate.islogin()){
+      state.userstate.renderMyAccount();
     }else{
       let login = new Login;
       login.render();
@@ -310,15 +308,14 @@ class Home {
   }
 
   getlocation(){
-    console.log(userstate.islogin())
-    if(userstate.islogin() || userstate.city != ""){
-      document.getElementById("header").innerHTML = userstate.city; 
+    if(state.userstate.islogin() || userstate.city != ""){
+      document.getElementById("header").innerHTML = state.userstate.city; 
     }else{
       const sucessfulLookup =  (position) => {
         const { latitude, longitude} = position.coords; 
         api.fetchLocation(latitude, longitude)
         .then(location =>  {
-          userstate.city = location.results[0].formatted.split(",")[1].substring(1);
+          state.userstate.city = location.results[0].formatted.split(",")[1].substring(1);
           document.getElementById("header").innerHTML = location.results[0].formatted.split(",")[1].substring(1); 
         })
       };

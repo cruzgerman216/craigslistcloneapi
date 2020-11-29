@@ -17,16 +17,15 @@ class Navbar {
             div.innerHTML =
             `
             <span class="navlink"style="bored: 1px solid black; border-radius: 100%; padding:3px;background-color:white;cursor:pointer"  onClick="clickHome()">CL</span> >
-            <span id="navtext" class="navlink">${userstate.email}</span>
+            <span id="navtext" class="navlink">${state.userstate.email}</span>
             <span id="logout" class="navlink" style="float:right;" >[Logout]</span>
             `
         }
 
-        if(userstate.islogin()){
-            console.log("truue")
+        if(state.userstate.islogin()){
             div.innerHTML = `
                 <span id="homenav" class="navlink"style="bored: 1px solid black; border-radius: 100%; padding:3px;background-color:white;cursor:pointer"  ">CL</span> >
-                <span id="navtext" class="navlink">${userstate.email}</span>
+                <span id="navtext" class="navlink">${state.userstate.email}</span>
                 <span id="logout" class="navlink" style="float:right;" >[Logout]</span>
             `
         }else{
@@ -47,7 +46,7 @@ class Navbar {
 
     logout = () =>{
         this.clickHome()
-        userstate.logout();
+        state.userstate.logout();
       }
 
     clickHome = () => {

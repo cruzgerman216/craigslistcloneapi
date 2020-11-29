@@ -1,6 +1,6 @@
 class PostForm{
     render(){
-        if(!userstate.islogin()){
+        if(!state.userstate.islogin()){
           let login = new Login;
           login.render();
           return;
@@ -179,7 +179,7 @@ class PostForm{
       
         let userpost = {};
         userpost.details = {title: title, location: location, description: description};
-        userpost.email = userstate.email
+        userpost.email = state.userstate.email
         userpost.category = category
       
         api.fetchCreatePost(userpost)

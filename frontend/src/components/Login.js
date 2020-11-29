@@ -93,13 +93,13 @@ class Login{
           if(user.errors){
             let errors = "does not exist";
           }else {
-            userstate.id = user.id;
-            userstate.email = user.email;
-            userstate.city = user.city;
+            state.userstate.id = user.id;
+            state.userstate.email = user.email;
+            state.userstate.city = user.city;
             sessionStorage.setItem("email", `${user.email}`);
             sessionStorage.setItem("city", `${user.city}`);
             sessionStorage.setItem("id", `${user.id}`);
-            userstate.renderMyAccount();
+            state.userstate.renderMyAccount();
           }
         })
       }

@@ -119,7 +119,7 @@ class Post {
   
       getposts.innerHTML += 
       `
-        <div class="link" data-id=${post.id}>${month}-${day} ${post.title}(${userstate.city})</div>
+        <div class="link" data-id=${post.id}>${month}-${day} ${post.title}(${state.userstate.city})</div>
       `
     }
     getposts.innerHTML += `<button  class="button"><a href="#top">^back to top<a></button>`;
@@ -130,9 +130,9 @@ class Post {
 
   deletepost(id){
     let postid = parseInt(id);
-    console.log(userstate);
+    console.log(state.userstate);
     api.deletePost(postid).then(()=>{
-      userstate.renderMyAccount();
+      state.userstate.renderMyAccount();
     })
   }
 }
