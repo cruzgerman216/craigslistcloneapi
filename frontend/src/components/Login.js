@@ -2,7 +2,6 @@ class Login{
     render(){
       document.body.innerHTML = "";
       new Navbar();
-
             let div = document.createElement("div");
             div.classList.add("container");
             div.setAttribute("id", "sessionforms")
@@ -33,7 +32,6 @@ class Login{
                   <input class="button" type="submit" value="Log in">
                 </div>
               </div>
-              
             </form>
           </div>
           <div id="or">or</div>

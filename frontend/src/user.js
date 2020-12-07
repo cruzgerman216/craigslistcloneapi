@@ -14,7 +14,7 @@ class User {
   islogin(){
     let condition;
     sessionStorage.length != 0 ? condition = true : condition = false;
-     return condition;
+    return condition;
   }
 
   logout(){
@@ -26,15 +26,11 @@ class User {
 
   renderMyAccount(){
     let post = new Post;
-    
-
     document.body.innerHTML = ``;
     new Navbar(); 
     let div = document.createElement("div");
     div.classList.add("useraccount");
     div.setAttribute("id", "user_account")
-    // reason for appending div is due to not creating the body of content
-    // that way, each event listener isn't removed
     document.body.append(div);
     div.innerHTML += 
     `

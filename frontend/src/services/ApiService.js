@@ -3,11 +3,6 @@ class ApiService{
         this.url = url
     }
 
-    fetchUsers = () => {
-        return fetch(`${this.url}/users`)
-          .then((resp) => resp.json())
-    }
-
     fetchLogin = (user) => {
         return fetch(`${this.url}/login`,{
             method: "POST",
@@ -21,7 +16,7 @@ class ApiService{
     }
 
     
-    fetchsignup = (user) =>{
+    fetchsignup = (user) => {
         return fetch(`${this.url}/users`,{
             method: "POST",
             headers: {
@@ -39,10 +34,9 @@ class ApiService{
         })
     }
 
-    fetchPost = (postid) =>{
-        return fetch(`${this.url}/posts/${postid}`)
-        .then((resp) => resp.json())
-    }
+    fetchUsers = () => fetch(`${this.url}/users`).then((resp) => resp.json())
+
+    fetchPost = (postid) => fetch(`${this.url}/posts/${postid}`).then((resp) => resp.json())
 
     fetchCreatePost = (userpost) => {
         return fetch(`${this.url}/posts`,{
@@ -56,9 +50,8 @@ class ApiService{
           .then(resp => resp.json())
     }
 
-    fetchUserPosts = (userId) => {
-        return fetch(`${this.url}/users/${userId}/posts`).then((resp) => resp.json())
-    }
+    fetchUserPosts = (userId) => fetch(`${this.url}/users/${userId}/posts`).then((resp) => resp.json())
+    
 
     deletePost = (postid) => {
         return  fetch(`${this.url}/posts/${postid}`,{
@@ -74,7 +67,7 @@ class ApiService{
     }
 
     fetchCategories = (category_id) => {
-        return fetch(`${BASE_URL}/categories/${category_id}/posts`)
+        return fetch(`${this.url}/categories/${category_id}/posts`)
         .then((resp) => resp.json())
     }
 

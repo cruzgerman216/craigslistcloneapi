@@ -1,18 +1,19 @@
 class Home {
   constructor(){
     this.render();
+    this.displayCalendar();
+    this.getlocation();
+    this.getCategories();
     this.addEventListeners();
   }
 
     render(){
       document.body.innerHTML = "";
-      
         let main = 
         `
         <div class="container main" style="width: 980px; padding-top: 15px;font-size:smaller;">
         <div class="row" style="text-align:center;">
           <div class="col-2 sidebar" style="flex: 0 0 20%; max-width:20%;">
-            
             <div class="row" style="display:block;">
               <h1 style="font-size: 2em"><a class="link" >craigslist</a></h1>
             </div>
@@ -27,15 +28,11 @@ class Home {
             <div class="row"style="display:block; padding:5px; " >
               <input style="width: 90%; text-align:center; border: 1px black solid;"placeholder="search craigslist">
             </div>
-  
             <div class="row" style="display:block; padding:10px; ">
                 <a class="link" >event calendar</a>
-  
                 <div class="container" style="margin-right:0;" id="calendar">
-  
                 </div>
             </div>
-            
             <div style="padding-top:15px;padding-bottom:15px">
               <div class="link" style="padding:2px">
                 craigslist app
@@ -59,7 +56,6 @@ class Home {
                 system status
               </div>
             </div>
-  
             <div style="padding-top:15px;padding-bottom:15px">
               <div class="link" style="padding:2px">
                 about craigslist
@@ -80,71 +76,49 @@ class Home {
                 crig newmark philanthropies
               </div>
             </div>
-  
           </div>
-  
           <div class="col-9"  style="flex: 0 0 70%; max-width:70%;">
             <div class="row headers"  style="display:block; margin-right:10px; margin-left:10px;padding:5px;">
               <h4 id="header">Welcome</h4>
             </div>
-  
             <div class="container" id="categories">
               <div class="row">
-  
                 <div class="col-5" id="column-1">
-  
                   <div id="column-1-1" >
                   </div>
-  
-  
                   <div id="column-1-61">
                   </div>
-  
                   <div id="column-1-137">
                   </div>
-  
                 </div>
                 <div class="col-5" style="padding:0px;">
-  
                   <div class="container">
                     <div id="column-1-19">
                     </div>
-  
                   </div>
-                  
                   <div class="container">
                     <div id="column-1-82">
                     </div>
-  
                   </div>
-  
-                  
                 </div>
                 <div class="col-2" style="padding:0px;" >
                   
                   <div class="container"style="padding:0px;" >
                     <div id="column-1-30">
                     </div>
-  
                   </div>
-  
                   <div class="container" > 
                         <div id="column-1-127">
-  
                         </div>
                 </div>
-  
                 <div class="container">
                   <div id="column-1-136">
                   </div>
                 </div>
-  
               </div>
            </div>
           </div>
         </div>
-  
-          
           <div class="col-1 sidebar"  style="flex: 0 0 9%; max-width:9%;">
             <div class="row" style="display:block; padding-top:10px">
               <select>
@@ -160,12 +134,9 @@ class Home {
               <p >columbia</p>
             </div>
           </div>
-  
-  
         </div>
       </div>
         `
-
         document.body.innerHTML = main;
         let div = document.createElement("div");
         div.classList.add("footer");
@@ -182,10 +153,6 @@ class Home {
         <a class="footerlinks" href="#">mobile</a>
       </div>
         `
-        this.displayCalendar();
-        this.getlocation();
-        this.getCategories();
-
     }
 
     getCategories = () => {
@@ -308,7 +275,7 @@ class Home {
   }
 
   getlocation(){
-    if(state.userstate.islogin() || userstate.city != ""){
+    if(state.userstate.islogin() || state.userstate.city != ""){
       document.getElementById("header").innerHTML = state.userstate.city; 
     }else{
       const sucessfulLookup =  (position) => {
@@ -325,12 +292,27 @@ class Home {
 
   displayCalendar(){
     let dated = new Date();
-    let firstDayy = new Date(dated.getFullYear(), dated.getMonth(), 1);
-    let day_of_week = firstDayy.getDay(); 
+    let firstday = new Date(dated.getFullYear(), dated.getMonth(),1);
+    console.log(firstday)
+    let day_of_week = firstday.getDay()-1; 
     let calendar_days = [];
+    // if the first day of the month is monday
     if(day_of_week == 0){
-      for(let i = day_of_week+2; i < 30;i++){
+      for(let i = day_of_week+1; i < 30;i++){
         calendar_days.push(i);
+      }
+    }else{
+    let lastday = new Date(dated.getFullYear(), dated.getMonth(),0);
+      lastday = lastday.getDate();
+      console.log("last day",lastday)
+      for(let i = -day_of_week; i < 30;i++){
+        if(Math.sign(i) == -1 || i == 0){
+          console.log(lastday+i)
+          calendar_days.push(lastday+i);
+        }else{
+          calendar_days.push(i);
+
+        }
       }
     }
   
@@ -371,7 +353,6 @@ class Home {
     getcal += div.innerHTML; 
     div.innerHTML = getcal;
   }
-
 
     clickCategory(){
       document.getElementById("categories").addEventListener("click", function(event){
