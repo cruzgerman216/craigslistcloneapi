@@ -12,7 +12,7 @@ class Home {
         let homepage = 
         `
         <div class="container main" style="width: 980px; padding-top: 15px;font-size:smaller;">
-        <div class="row" style="text-align:center;">
+         <div class="row" style="text-align:center;">
           <div class="col-2 sidebar" style="flex: 0 0 20%; max-width:20%;">
             <div class="row" style="display:block;">
               <h1 style="font-size: 2em"><a class="link" >craigslist</a></h1>
@@ -176,7 +176,7 @@ class Home {
         `
     }
 
-  getCategories = () => {
+  getCategories() {
     api.fetchallcategories()
     .then((categories) => {
       for(let i = 0; i < categories.length-1; i++){
