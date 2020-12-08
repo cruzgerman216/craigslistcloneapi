@@ -1,4 +1,7 @@
 class PostForm{
+  constructor(){
+    this.render();
+  }
     render(){
         if(!state.userstate.islogin()){
           let login = new Login;

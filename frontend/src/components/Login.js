@@ -1,4 +1,7 @@
 class Login{
+  constructor(){
+    this.render();
+  }
     render(){
       document.body.innerHTML = "";
       new Navbar();

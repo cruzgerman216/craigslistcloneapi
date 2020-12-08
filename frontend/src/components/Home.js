@@ -9,7 +9,7 @@ class Home {
 
     render(){
       document.body.innerHTML = "";
-        let main = 
+        let homepage = 
         `
         <div class="container main" style="width: 980px; padding-top: 15px;font-size:smaller;">
         <div class="row" style="text-align:center;">
@@ -158,12 +158,12 @@ class Home {
         </div>
       </div>
         `
-        document.body.innerHTML = main;
-        let div = document.createElement("div");
-        div.classList.add("footer");
-        document.body.append(div);
+        document.body.innerHTML = homepage;
+        let footer = document.createElement("div");
+        footer.classList.add("footer");
+        document.body.append(footer);
 
-        div.innerHTML += 
+        footer.innerHTML += 
         `
         <div class="footer" >@2020 craigslist 
         <a class="footerlinks" href="#">help</a> 
@@ -201,14 +201,12 @@ class Home {
     if(state.userstate.islogin()){
       state.userstate.renderMyAccount();
     }else{
-      let login = new Login;
-      login.render();
+      new Login;
     }
     })
 
     document.getElementById("homecreatepost").addEventListener("click", ()=>{
-      let post = new PostForm;
-      post.render();
+      new PostForm;
     })
 
     document.getElementById("categories").addEventListener("click", function(event){
