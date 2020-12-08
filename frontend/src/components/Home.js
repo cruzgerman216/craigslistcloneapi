@@ -179,10 +179,10 @@ class Home {
   getCategories() {
     api.fetchallcategories()
     .then((categories) => {
-      for(let i = 0; i < categories.length-1; i++){
-        let parent_id = categories[i].parent_id;
-        let subcategory_name = categories[i].name;
-        let subcategory_id = categories[i].id;
+      categories.forEach(category=>{
+        let parent_id = category.parent_id;
+        let subcategory_name = category.name;
+        let subcategory_id = category.id;
         if(parent_id){
           let category_div = document.getElementById(`category-${parent_id}`);
           category_div.innerHTML += 
@@ -192,7 +192,7 @@ class Home {
               </div>
             `
         }
-      }
+      })
     });
   }
 
