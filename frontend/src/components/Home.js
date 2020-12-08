@@ -84,35 +84,56 @@ class Home {
             <div class="container" id="categories">
               <div class="row">
                 <div class="col-5" id="column-1">
-                  <div id="column-1-1" >
-                  </div>
-                  <div id="column-1-61">
-                  </div>
-                  <div id="column-1-137">
-                  </div>
-                </div>
-                <div class="col-5" style="padding:0px;">
-                  <div class="container">
-                    <div id="column-1-19">
+                    <div>                  
+                      <h5 class="subheaders link" name="community" data-id="1">community</h5>
+                      <div  class="container grid-container-two-column" id="category-1" id="category-1" style="font-size:12px; padding:0px;">
+                      </div>
+                    </div>
+
+                  <div>                  
+                    <h5 class="subheaders link" name="services" data-id="1">services</h5>
+                    <div class="container grid-container-two-column" id="category-61">
                     </div>
                   </div>
-                  <div class="container">
-                    <div id="column-1-82">
+
+                <div>                  
+                    <h5 class="subheaders link" name="discussion forums" data-id="1">discussion forums</h5>
+                    <div class="container grid-container-three-column" id="category-137">
                     </div>
-                  </div>
                 </div>
+
+                </div>
+                <div class="col-5" >
+              <div>                  
+                  <h5 class="subheaders link" name="housing" data-id="1">housing</h5>
+                  <div class="container grid-container-one-column" id="category-19" >
+                  </div>
+              </div>
+
+              <div>                  
+                  <h5 class="subheaders link" name="for sale" data-id="1">for sale</h5>
+                  <div class="container grid-container-two-column" id="category-82">
+                  </div>
+              </div>
+
+                </div>
+
                 <div class="col-2" style="padding:0px;" >
-                  
-                  <div class="container"style="padding:0px;" >
-                    <div id="column-1-30">
-                    </div>
+                <div>                  
+                  <h5 class="subheaders link" name="jobs" data-id="1">jobs</h5>
+                  <div class="container grid-container-one-column" id="category-30" style="padding:0px;" >
                   </div>
-                  <div class="container" > 
-                        <div id="column-1-127">
-                        </div>
                 </div>
+
+                <div>                  
+                  <h5 class="subheaders link" name="gigs" data-id="1">gigs</h5>
+                  <div class="container grid-container-two-column" id="category-127"  > 
+                  </div>
+                </div>
+
                 <div class="container">
-                  <div id="column-1-136">
+                  <div id="category-136">
+                  <h5 class="subheaders link" name="resumes" data-id="1">resumes</h5>
                   </div>
                 </div>
               </div>
@@ -157,107 +178,25 @@ class Home {
 
     getCategories = () => {
       this.clickCategory();
-      let arr = [];
       api.fetchallcategories()
       .then((categories) => {
-        let on = true;
-        let j = 0;
-       let community_div;
-        for (let i = 0;i < categories.length-1; i++ ){
-          if(categories[i].parent_id == null){
-            let div = document.getElementById(`column-1-${categories[i].id}`);
-            div.innerHTML += 
+        let category_div; 
+        for(let i = 0; i < categories.length-1; i++){
+          let parent_id = categories[i].parent_id;
+          let subcategory_name = categories[i].name;
+          let subcategory_id = categories[i].id;
+          if(parent_id){
+            category_div = document.getElementById(`category-${parent_id}`);
+            category_div.innerHTML += 
             `
-              <h5 class="subheaders link" name="${categories[i].name}" data-id="${categories[i].id}"  >${categories[i].name}</h5>
-              <div class="container"  id="category-${categories[i].id}" style="font-size:12px; padding:0px;">
+              <div class="linkcategory" name="${subcategory_name}" data-id="${subcategory_id}" >${subcategory_name}
               </div>
             `
-    
-          }else if([1,61,82, 127].includes(categories[i-1].parent_id) && j == 1){
-             community_div = document.getElementById(`category-${categories[i].parent_id}`);
-            if(categories[i+1]){
-              on = false;
-              if(categories[i+1].parent_id){
-              j=0;
-              community_div.innerHTML += 
-              `
-                <div class="row" >
-                  <div class="col-6 linkcategory" name="${categories[i-1].name}"  style="padding:0px;"  data-id="${categories[i-1].id}" >
-                  <a>${categories[i-1].name}</a>
-                  </div>
-                  <div class="col-6 linkcategory" name="${categories[i].name}"  style="padding:0px;"data-id="${categories[i].id}" >
-                  ${categories[i].name}
-                  </div>
-                </div>
-              `
-            }else{
-              j=0;
-    
-              community_div.innerHTML += 
-              `
-                <div class="row" >
-                  <div class="col-6 linkcategory" name="${categories[i].name}  style="padding:0px;"  data-id="${categories[i].id}" >
-                  ${categories[i].name}
-                  </div>
-                </div>
-              `
-            }
-           }
-          }else if([19,30].includes(categories[i].parent_id)){
-           j = 0;
-             community_div = document.getElementById(`category-${categories[i].parent_id}`);
-    
-              community_div.innerHTML += 
-              `
-                <div class="row" >
-                  <div class="col-12 linkcategory" name="${categories[i].name} style="padding:0px;" data-id="${categories[i].id}" >
-                  ${categories[i].name}
-                  </div>
-                </div>
-              `
-    
           }
-          else{
-            on = true;
-            j++;
-          }
-
-        if([137].includes(categories[i].parent_id) && j == 2){
-          arr.push(categories[i])
-          community_div = document.getElementById(`category-${categories[i].parent_id}`);
-          j=0;
         }
-
-        }
-
-        //sort challenge
-        arr = this.sortlist(arr);
-        let rowdiv = ``;
-        let rowid = 0;
-        let category = document.getElementById(`category-${137}`);
-        let div = document.createElement("div");
-        div.classList.add("row");
-        div.setAttribute("id", "forum")
-        category.append(div);
-        let row = document.getElementById("forum")
-
-        for(let i = 0; i < arr.length-1; i++){
-          if(i%8 == 0){
-            rowdiv = `<div class="col-4 " id="row-${i}"></div>`;
-            row.innerHTML += rowdiv;
-            rowid = i;
-          }
-          document.getElementById(`row-${rowid}`).innerHTML += 
-          `
-              <div class="row linkcategory" name="${arr[i].name}  style="padding:0px;"  data-id="${arr[i].id}" >
-              ${arr[i].name}
-              </div>
-          `
-        }
-
       });
-
   }
+  
   addEventListeners(){
     document.getElementById("myaccount").addEventListener("click",()=>{
     if(state.userstate.islogin()){
@@ -293,10 +232,8 @@ class Home {
   displayCalendar(){
     let dated = new Date();
     let firstday = new Date(dated.getFullYear(), dated.getMonth(),1);
-    console.log(firstday)
     let day_of_week = firstday.getDay()-1; 
     let calendar_days = [];
-    // if the first day of the month is monday
     if(day_of_week == 0){
       for(let i = day_of_week+1; i < 30;i++){
         calendar_days.push(i);
@@ -304,10 +241,8 @@ class Home {
     }else{
     let lastday = new Date(dated.getFullYear(), dated.getMonth(),0);
       lastday = lastday.getDate();
-      console.log("last day",lastday)
       for(let i = -day_of_week; i < 30;i++){
         if(Math.sign(i) == -1 || i == 0){
-          console.log(lastday+i)
           calendar_days.push(lastday+i);
         }else{
           calendar_days.push(i);
@@ -366,20 +301,4 @@ class Home {
           }
       })
     }
-
-    sortlist(arr){
-      return arr.sort(function(a, b) {
-        var nameA = a.name.toUpperCase(); 
-        var nameB = b.name.toUpperCase(); 
-        if (nameA < nameB) {
-          return -1;
-        }
-        if (nameA > nameB) {
-          return 1;
-        }
-      
-        return 0;
-      });
-    }
-
 }
