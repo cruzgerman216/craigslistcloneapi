@@ -176,27 +176,26 @@ class Home {
         `
     }
 
-    getCategories = () => {
-      this.clickCategory();
-      api.fetchallcategories()
-      .then((categories) => {
-        let category_div; 
-        for(let i = 0; i < categories.length-1; i++){
-          let parent_id = categories[i].parent_id;
-          let subcategory_name = categories[i].name;
-          let subcategory_id = categories[i].id;
-          if(parent_id){
-            category_div = document.getElementById(`category-${parent_id}`);
-            category_div.innerHTML += 
+  getCategories = () => {
+    api.fetchallcategories()
+    .then((categories) => {
+      for(let i = 0; i < categories.length-1; i++){
+        let parent_id = categories[i].parent_id;
+        let subcategory_name = categories[i].name;
+        let subcategory_id = categories[i].id;
+        if(parent_id){
+          let category_div = document.getElementById(`category-${parent_id}`);
+          category_div.innerHTML += 
             `
-              <div class="linkcategory" name="${subcategory_name}" data-id="${subcategory_id}" >${subcategory_name}
+              <div class="linkcategory" name="${subcategory_name}" data-id="${subcategory_id}" >
+                ${subcategory_name}
               </div>
             `
-          }
         }
-      });
+      }
+    });
   }
-  
+
   addEventListeners(){
     document.getElementById("myaccount").addEventListener("click",()=>{
     if(state.userstate.islogin()){
@@ -210,6 +209,17 @@ class Home {
     document.getElementById("homecreatepost").addEventListener("click", ()=>{
       let post = new PostForm;
       post.render();
+    })
+
+    document.getElementById("categories").addEventListener("click", function(event){
+      if(event.target.attributes["data-id"]){
+          let name = event.target.attributes["name"].value
+          let category_id = event.target.attributes["data-id"].value;
+          api.fetchCategories(category_id).then((posts) => {
+          let postpage = new Post;
+          postpage.displayposts(name,posts);
+          });
+        }
     })
   }
 
@@ -288,17 +298,4 @@ class Home {
     getcal += div.innerHTML; 
     div.innerHTML = getcal;
   }
-
-    clickCategory(){
-      document.getElementById("categories").addEventListener("click", function(event){
-        if(event.target.attributes["data-id"]){
-            let name = event.target.attributes["name"].value
-            let category_id = event.target.attributes["data-id"].value;
-            api.fetchCategories(category_id).then((posts) => {
-            let postpage = new Post;
-            postpage.displayposts(name,posts);
-            });
-          }
-      })
-    }
 }
