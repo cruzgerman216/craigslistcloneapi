@@ -3,6 +3,8 @@ class ApiService{
         this.url = url
     }
 
+    fetchallcategories = () => fetch(`${this.url}/categories`).then((resp) => resp.json())
+
     fetchLogin = (user) => {
         return fetch(`${this.url}/login`,{
             method: "POST",
@@ -66,19 +68,15 @@ class ApiService{
         .then(response =>  response.json())
     }
 
-    fetchCategories = (category_id) => {
+    fetchAllPosts = (category_id) => {
         return fetch(`${this.url}/categories/${category_id}/posts`)
         .then((resp) => resp.json())
     }
-
 
     fetchSubcategories = (category) =>{
         return fetch(`${this.url}/${category}/subcategories`)
         .then((resp) => resp.json())
     }
 
-    fetchallcategories = () =>{
-      return fetch(`${this.url}/categories`)
-        .then((resp) => resp.json())
-    }
+
 }

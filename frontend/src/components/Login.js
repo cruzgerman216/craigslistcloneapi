@@ -1,15 +1,14 @@
 class Login{
   constructor(){
+    new Navbar();
     this.render();
   }
     render(){
-      document.body.innerHTML = "";
-      new Navbar();
-            let div = document.createElement("div");
-            div.classList.add("container");
-            div.setAttribute("id", "sessionforms")
-            document.body.append(div);
-            div.innerHTML +=
+            const login = document.createElement("div");
+            login.classList.add("container");
+            login.setAttribute("id", "sessionforms")
+            document.body.append(login);
+            login.innerHTML +=
             `
             <div class="mainlogin">
             <div id="headerform">
@@ -59,11 +58,11 @@ class Login{
           </div>
             `
 
-            div = document.createElement("div");
-            div.classList.add("footer");
-            document.body.append(div);
+            const footer = document.createElement("div");
+            footer.classList.add("footer");
+            document.body.append(footer);
     
-            div.innerHTML += 
+            footer.innerHTML += 
             `
             <div class="footer" >@2020 craigslist 
             <a class="footerlinks" href="#">help</a> 
@@ -74,25 +73,25 @@ class Login{
             <a class="footerlinks" href="#">mobile</a>
           </div>
             `
-        let usersForm = document.getElementById("login-form");
-        let signupForm = document.getElementById("signup-form");
-        signupForm.addEventListener("submit", this.userFormSubmission)
+        const usersForm = document.getElementById("login-form");
+        const signupForm = document.getElementById("signup-form");
+        signupForm.addEventListener("submit", this.userSignUpForm)
         usersForm.addEventListener("submit", this.userFormLoginSubmission)
     }
 
     userFormLoginSubmission = (event) =>{
         event.preventDefault();
-        let email = document.getElementById("email").value
-        let password = document.getElementById("password").value
+        const email = document.getElementById("email").value
+        const password = document.getElementById("password").value
       
-        let user = {
+        const user = {
           password: password,
           email: email
         }
       
-        api.fetchLogin(user).then (user => {
+        api.fetchLogin(user).then(user => {
           if(user.errors){
-            let errors = "does not exist";
+            throw new Error(user.errors);
           }else {
             state.userstate.id = user.id;
             state.userstate.email = user.email;
@@ -102,27 +101,30 @@ class Login{
             sessionStorage.setItem("id", `${user.id}`);
             state.userstate.renderMyAccount();
           }
+        }).catch(error=>{
+          new Login();
+          document.getElementById("sessionforms").innerHTML += `<div style="color:red">${error}</div>`;
         })
       }
 
-      userFormSubmission = (event) =>{
+      userSignUpForm = (event) =>{
         event.preventDefault();
-        let email = document.getElementById("signupemail").value
-        let password = document.getElementById("signuppassword").value
-        let user = {
+        const email = document.getElementById("signupemail").value
+        const password = document.getElementById("signuppassword").value
+        const user = {
           password: password,
           email: email,
           city: "dallas"
         }
-      
         api.fetchsignup(user)
         .then (user => {
-          let u = new User(user.id, user.email, user.city);
+          state.userstate.id = user.id;
+          state.userstate.email = user.email;
+          state.userstate.city = user.city;
           sessionStorage.setItem("email", `${u.email}`);
           sessionStorage.setItem("city", `${u.city}`);
           sessionStorage.setItem("id", `${u.id}`);
-      
-          u.renderMyAccount();
+          state.userstate.renderMyAccount();
         })
       }
 }

@@ -124,7 +124,10 @@ class Post {
     }
     getposts.innerHTML += `<button  class="button"><a href="#top">^back to top<a></button>`;
     document.getElementById("mainposts").addEventListener("click",(event)=>{
-      this.displaypost(event.target.attributes["data-id"].value)
+      let data = event.target.attributes["data-id"];
+      if(data){
+        this.displaypost(data.value)
+      }
     })
   }
 

@@ -9,7 +9,7 @@ class Home {
 
     render(){
       document.body.innerHTML = "";
-        let homepage = 
+        const home = 
         `
         <div class="container main" style="width: 980px; padding-top: 15px;font-size:smaller;">
          <div class="row" style="text-align:center;">
@@ -158,8 +158,8 @@ class Home {
         </div>
       </div>
         `
-        document.body.innerHTML = homepage;
-        let footer = document.createElement("div");
+        document.body.innerHTML = home;
+        const footer = document.createElement("div");
         footer.classList.add("footer");
         document.body.append(footer);
 
@@ -178,13 +178,13 @@ class Home {
 
   getCategories() {
     api.fetchallcategories()
-    .then((categories) => {
+    .then(categories => {
       categories.forEach(category=>{
-        let parent_id = category.parent_id;
-        let subcategory_name = category.name;
-        let subcategory_id = category.id;
+        const parent_id = category.parent_id;
+        const subcategory_name = category.name;
+        const subcategory_id = category.id;
         if(parent_id){
-          let category_div = document.getElementById(`category-${parent_id}`);
+          const category_div = document.getElementById(`category-${parent_id}`);
           category_div.innerHTML += 
             `
               <div class="linkcategory" name="${subcategory_name}" data-id="${subcategory_id}" >
@@ -206,16 +206,20 @@ class Home {
     })
 
     document.getElementById("homecreatepost").addEventListener("click", ()=>{
-      new PostForm;
+      if(state.userstate.islogin()){
+        new PostForm;
+      }else{
+        new Login;
+      }
     })
 
-    document.getElementById("categories").addEventListener("click", function(event){
+    document.getElementById("categories").addEventListener("click", (event)=>{
       if(event.target.attributes["data-id"]){
-          let name = event.target.attributes["name"].value
-          let category_id = event.target.attributes["data-id"].value;
-          api.fetchCategories(category_id).then((posts) => {
-          let postpage = new Post;
-          postpage.displayposts(name,posts);
+          const subcategory_name = event.target.attributes["name"].value
+          const subcategory_id = event.target.attributes["data-id"].value;
+          api.fetchAllPosts(subcategory_id).then(posts => {
+            const postpage = new Post;
+            postpage.displayposts(subcategory_name,posts);
           });
         }
     })
@@ -238,18 +242,18 @@ class Home {
   }
 
   displayCalendar(){
-    let dated = new Date();
-    let firstday = new Date(dated.getFullYear(), dated.getMonth(),1);
-    let day_of_week = firstday.getDay()-1; 
-    let calendar_days = [];
-    if(day_of_week == 0){
-      for(let i = day_of_week+1; i < 30;i++){
+    const dated = new Date();
+    const firstday = new Date(dated.getFullYear(), dated.getMonth(),1);
+    const day_of_week = firstday.getDay();
+    const calendar_days = [];
+    if(day_of_week == 1){
+      for(let i = day_of_week; i < 30;i++){
         calendar_days.push(i);
       }
     }else{
-    let lastday = new Date(dated.getFullYear(), dated.getMonth(),0);
-      lastday = lastday.getDate();
-      for(let i = -day_of_week; i < 30;i++){
+      const lastdaydate = new Date(dated.getFullYear(), dated.getMonth(),0);
+      const lastday = lastdaydate.getDate();
+      for(let i = -day_of_week+2; i < 30;i++){
         if(Math.sign(i) == -1 || i == 0){
           calendar_days.push(lastday+i);
         }else{
@@ -259,7 +263,7 @@ class Home {
       }
     }
   
-    let div = document.getElementById("calendar");
+    const div = document.getElementById("calendar");
     let getcol = ``;
     for(let i=1; i<29; i++){
       getcol += 

@@ -3,12 +3,6 @@ class PostForm{
     this.render();
   }
     render(){
-        if(!state.userstate.islogin()){
-          let login = new Login;
-          login.render();
-          return;
-        }
-
         document.body.innerHTML = "";
         new Navbar();
           let div = document.createElement("div");
@@ -121,7 +115,7 @@ class PostForm{
         form2.addEventListener("submit", this.createPostByUser)
       }
 
-      createPostByUser = (event) => {
+      createPostByUser = event => {
         event.preventDefault();
       
         let posting = document.getElementsByName("category")
@@ -174,7 +168,9 @@ class PostForm{
 
       informationPost = (event) => {
         event.preventDefault();
-      
+        //use the event to get the value 
+        // e .target.querySelector("#new-comment").value
+        // the form is the target that the event is on 
         let title = document.getElementById("title").value
         let location = document.getElementById("location").value
         let description = document.getElementById("description").value
