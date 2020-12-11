@@ -29,6 +29,14 @@ class PostsController < ApplicationController
     render json: @post
   end
 
+  def search_posts
+    puts params
+    @posts = Post.where("title LIKE ?", "%#{params[:search]}%")
+    puts @posts.length
+    render json: @posts
+  end
+  
+
   # POST /posts
   def create
     @category = Category.find_by(name: params["category"])

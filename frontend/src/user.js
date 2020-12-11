@@ -25,14 +25,13 @@ class User {
   }
 
   renderMyAccount(){
-    let post = new Post;
     document.body.innerHTML = ``;
     new Navbar(); 
-    let div = document.createElement("div");
-    div.classList.add("useraccount");
-    div.setAttribute("id", "user_account")
-    document.body.append(div);
-    div.innerHTML += 
+    const myaccount = document.createElement("div");
+    myaccount.classList.add("useraccount");
+    myaccount.setAttribute("id", "user_account")
+    document.body.append(myaccount);
+    myaccount.innerHTML += 
     `
     <fieldset class="field" >
       <legend style="font-size: .95em">( page: 1 )</legend>
@@ -64,9 +63,9 @@ class User {
     </fieldset> 
     `;
     api.fetchUserPosts(sessionStorage.id).then((posts)=>{
-      let myposts = document.getElementById("myposts")
+      const myposts = document.getElementById("myposts")
       myposts.innerHTML = "";
-      for(let i = 0; i < posts.length; i++){
+      posts.map(post => {
         myposts.innerHTML += 
         `
           <div class="row adjustable">
@@ -74,35 +73,33 @@ class User {
               status
             </div>
             <div class="col-3 mypostentry">
-              <a class="link" data-id="${posts[i].id}" name="display">display</a>
-              <a class="link" data-id="${posts[i].id}" name="delete">delete</a>
+              <a class="link" data-id="${post.id}" name="display">display</a>
+              <a class="link" data-id="${post.id}" name="delete">delete</a>
               <a class="link">edit</a>
             </div>
             <div class="col-5 mypostentry">
-              ${posts[i].title}
+              ${post.title}
             </div>
             <div class="col-2 mypostentry">
-              ${posts[i].created_at}
+              ${post.created_at}
             </div>
 
             <div class="col-1 mypostentry">
-              ${posts[i].id}
+              ${post.id}
             </div>
           </div>
         `
-      }
+      })
     })
     myposts.addEventListener("click", (event)=>{
+      const post = new Post;
       if(event.target.attributes["data-id"]){
         if(event.target.attributes["name"].value =="delete"){
           post.deletepost(event.target.attributes["data-id"].value)
         }else if(event.target.attributes["name"].value =="display"){
-          
           post.displaypost(event.target.attributes["data-id"].value)
         }              
       }
     })
-
   }
-  
 }

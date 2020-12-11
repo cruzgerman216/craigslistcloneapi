@@ -25,8 +25,10 @@ class Home {
             <div class="row" id="session" style="display:block; padding:5px;">
               <div id="myaccount">my account</div>
             </div>
-            <div class="row"style="display:block; padding:5px; " >
-              <input style="width: 90%; text-align:center; border: 1px black solid;"placeholder="search craigslist">
+            <div class="row"style="display:block; padding:5px;" >
+              <form id="searchbar">
+              <input id="searchbarinput" style="width: 90%; text-align:center; border: 1px black solid;"placeholder="search craigslist" input="submit">
+              </form>
             </div>
             <div class="row" style="display:block; padding:10px; ">
                 <a class="link" >event calendar</a>
@@ -222,6 +224,15 @@ class Home {
             postpage.displayposts(subcategory_name,posts);
           });
         }
+    })
+
+    document.getElementById("searchbar").addEventListener("submit",event=>{
+      event.preventDefault();
+      const search = event.target.querySelector(`#searchbarinput`).value;
+      api.fetchSearchPosts(search).then(posts=>{
+        const postpage = new Post;
+        postpage.displayposts(search,posts);
+      })
     })
   }
 

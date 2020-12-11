@@ -8,17 +8,15 @@ class Post {
   displaypost(postid = event.target.attributes["data-id"].value){
     document.body.innerHTML = "";
     new Navbar();
-    let div = document.createElement("div");
-    div.setAttribute("id", "post")
-    document.body.append(div);
-    let getpost = document.createElement("div");
+    const postdiv = document.createElement("div");
+    postdiv.setAttribute("id", "post")
+    document.body.append(postdiv);
+    const getpost = document.createElement("div");
     getpost.setAttribute("id", "getpost")
-    div.append(getpost);
+    postdiv.append(getpost);
 
     api.fetchPost(postid)
-    .then((post) => {
-      getpost.style.display = "block";
-      getpost.innerHTML = '';
+    .then(post => {
       getpost.innerHTML += `
       <div class="container">
         <div class="row">
@@ -41,7 +39,7 @@ class Post {
         </div>
       </div>
     `;
-      let column = 
+      const column = 
       `
         <div class="row">
           <div class="col-8">
@@ -66,11 +64,11 @@ class Post {
    displayposts(name, posts){
     document.body.innerHTML = "";
     new Navbar();
-    let div = document.createElement("div");
-    div.setAttribute("id", "mainposts")
-    document.body.append(div);
+    const displayposts = document.createElement("div");
+    displayposts.setAttribute("id", "mainposts")
+    document.body.append(displayposts);
 
-    div.innerHTML = `
+    displayposts.innerHTML = `
     
     <div id="mainposts" >
     <a name="top"><a>
@@ -109,22 +107,20 @@ class Post {
     document.getElementById("sidenavname").innerHTML = name;
     document.getElementById("searchinput").placeholder = `search ${name}`;
     
-    let getposts = document.getElementById("posts");
-    getposts.innerHTML = ``;
+    const getposts = document.getElementById("posts");
   
-    for(let post of posts){
-      // console.log(post);
-      let month = post.created_at.split("T")[0].split("-")[1]
-      let day = post.created_at.split("T")[0].split("-")[2]
+    posts.map(post =>{
+      const month = post.created_at.split("T")[0].split("-")[1]
+      const day = post.created_at.split("T")[0].split("-")[2]
   
       getposts.innerHTML += 
       `
         <div class="link" data-id=${post.id}>${month}-${day} ${post.title}(${state.userstate.city})</div>
       `
-    }
+    })
     getposts.innerHTML += `<button  class="button"><a href="#top">^back to top<a></button>`;
     document.getElementById("mainposts").addEventListener("click",(event)=>{
-      let data = event.target.attributes["data-id"];
+      const data = event.target.attributes["data-id"];
       if(data){
         this.displaypost(data.value)
       }
@@ -132,8 +128,7 @@ class Post {
   }
 
   deletepost(id){
-    let postid = parseInt(id);
-    console.log(state.userstate);
+    const postid = parseInt(id);
     api.deletePost(postid).then(()=>{
       state.userstate.renderMyAccount();
     })
