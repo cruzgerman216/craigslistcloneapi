@@ -217,11 +217,14 @@ class Home {
 
     document.getElementById("categories").addEventListener("click", (event)=>{
       if(event.target.attributes["data-id"]){
-          const subcategory_name = event.target.attributes["name"].value
-          const subcategory_id = event.target.attributes["data-id"].value;
-          api.fetchAllPosts(subcategory_id).then(posts => {
+        const category = {
+           name: event.target.attributes["name"].value,
+           id: event.target.attributes["data-id"].value
+        }
+
+          api.fetchAllPosts(category.id).then(posts => {
             const postpage = new Post;
-            postpage.displayposts(subcategory_name,posts);
+            postpage.displayposts(category,posts);
           });
         }
     })
@@ -231,7 +234,10 @@ class Home {
       const search = event.target.querySelector(`#searchbarinput`).value;
       api.fetchSearchPosts(search).then(posts=>{
         const postpage = new Post;
-        postpage.displayposts(search,posts);
+        const category = {
+          name: search
+        }
+        postpage.displayposts(category,posts);
       })
     })
   }

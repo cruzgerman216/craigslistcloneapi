@@ -61,7 +61,7 @@ class Post {
     });
   }
 
-   displayposts(name, posts){
+   displayposts(category, posts){
     document.body.innerHTML = "";
     new Navbar();
     const displayposts = document.createElement("div");
@@ -74,7 +74,7 @@ class Post {
     <a name="top"><a>
     <form id="search" class="searchnav">
       <input id="searchinput" type="text" style="width:55%; color:#969494;font-size:1.3em" placeholder="search" class="button">
-      <button class="button" ><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill-rule="evenodd" d="M14.53 15.59a8.25 8.25 0 111.06-1.06l5.69 5.69a.75.75 0 11-1.06 1.06l-5.69-5.69zM2.5 9.25a6.75 6.75 0 1111.74 4.547.746.746 0 00-.443.442A6.75 6.75 0 012.5 9.25z"></path></svg></button>
+      <button class="button" input="submit"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill-rule="evenodd" d="M14.53 15.59a8.25 8.25 0 111.06-1.06l5.69 5.69a.75.75 0 11-1.06 1.06l-5.69-5.69zM2.5 9.25a6.75 6.75 0 1111.74 4.547.746.746 0 00-.443.442A6.75 6.75 0 012.5 9.25z"></path></svg></button>
     </form>
 
     <div class="sidenav">
@@ -104,11 +104,10 @@ class Post {
     </div>
   </div>`
 
-    document.getElementById("sidenavname").innerHTML = name;
-    document.getElementById("searchinput").placeholder = `search ${name}`;
+    document.getElementById("sidenavname").innerHTML = category.name;
+    document.getElementById("searchinput").placeholder = `search ${category.name}`;
     
     const getposts = document.getElementById("posts");
-  
     posts.map(post =>{
       const month = post.created_at.split("T")[0].split("-")[1]
       const day = post.created_at.split("T")[0].split("-")[2]
@@ -125,12 +124,29 @@ class Post {
         this.displaypost(data.value)
       }
     })
+
+    document.getElementById("search").addEventListener("submit",event=>{
+      event.preventDefault();
+      const search = event.target.querySelector(`#searchinput`).value;
+      if(search && category.id){
+        api.fetchSearchCategoryPost(category.id,search).then(posts=>{
+          const postpage = new Post;
+          postpage.displayposts(category,posts);
+      })
+    }else{
+      api.fetchSearchPosts(search).then(posts=>{
+        const postpage = new Post;
+        const category = {
+          name: search
+        }
+        postpage.displayposts(category,posts);
+      })
+    }
+    })
   }
 
   deletepost(id){
     const postid = parseInt(id);
-    api.deletePost(postid).then(()=>{
-      state.userstate.renderMyAccount();
-    })
+    api.deletePost(postid).then(()=>state.userstate.renderMyAccount())
   }
 }

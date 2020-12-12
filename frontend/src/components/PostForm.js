@@ -168,15 +168,12 @@ class PostForm{
 
       informationPost = (event) => {
         event.preventDefault();
-        //use the event to get the value 
-        // e .target.querySelector("#new-comment").value
-        // the form is the target that the event is on 
-        let title = document.getElementById("title").value
-        let location = document.getElementById("location").value
-        let description = document.getElementById("description").value
-        let category = document.getElementById("category").value
+        const title = document.getElementById("title").value
+        const location = document.getElementById("location").value
+        const description = document.getElementById("description").value
+        const category = document.getElementById("category").value
       
-        let userpost = {};
+        const userpost = {};
         userpost.details = {title: title, location: location, description: description};
         userpost.email = state.userstate.email
         userpost.category = category
@@ -185,7 +182,7 @@ class PostForm{
         .then (post => {
           document.querySelector(".createpost").innerHTML = "";
           document.querySelector(".createpost").style.display = "none";
-          let postpage = new Post;
+          const postpage = new Post;
           postpage.displaypost(post.id)
         })
       

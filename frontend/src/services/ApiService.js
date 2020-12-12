@@ -19,7 +19,9 @@ class ApiService{
 
     fetchSubcategories = category => fetch(`${this.url}/${category}/subcategories`).then((resp) => resp.json())
     
-    fetchSearchPosts = name => fetch(`${this.url}/posts/search/${name}`).then(resp=>resp.json())
+    fetchSearchPosts = search => fetch(`${this.url}/posts/search/${search}`).then(resp=>resp.json())
+
+    fetchSearchCategoryPost = (id, search) => fetch(`${this.url}/category/${id}/${search}`).then(resp=>resp.json())
 
     fetchCreatePost = (userpost) => {
       return fetch(`${this.url}/posts`,{

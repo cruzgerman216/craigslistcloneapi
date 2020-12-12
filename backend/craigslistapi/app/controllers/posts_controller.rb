@@ -30,9 +30,7 @@ class PostsController < ApplicationController
   end
 
   def search_posts
-    puts params
     @posts = Post.where("title LIKE ?", "%#{params[:search]}%")
-    puts @posts.length
     render json: @posts
   end
   
@@ -42,7 +40,6 @@ class PostsController < ApplicationController
     @category = Category.find_by(name: params["category"])
     @post = Post.new(title: params["details"]["title"], city: params["details"]["location"], description: params["details"]["description"])
     @user = User.find_by(email: params["email"])  
-    puts params
     if @post
       @user.posts << @post
       @category.posts << @post 

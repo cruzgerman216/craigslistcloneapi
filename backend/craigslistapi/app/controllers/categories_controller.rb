@@ -18,12 +18,20 @@ class CategoriesController < ApplicationController
     @categories = Category.primary_categories
     render json: @categories
   end
+
+  def search_category_posts
+    @category = Category.find(params[:id])
+    if @category && params[:search]
+      render json: @category.posts.where("title LIKE ?", "%#{params[:search]}%")
+    else
+      render json: @category, status: unprocessable_entity 
+    end
+  end
   
   def sub_categories
     @category = Category.find_by(name: params[:name]);
     if @category
       @categories = Category.sub_categories(@category.id)
-      @categories
       render json: @categories, status: :created
     else
       render json: @category, status: :unprocessable_entity
