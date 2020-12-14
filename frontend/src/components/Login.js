@@ -111,19 +111,19 @@ class Login{
         event.preventDefault();
         const email = document.getElementById("signupemail").value
         const password = document.getElementById("signuppassword").value
-        const user = {
+        const userinfo = {
           password: password,
           email: email,
           city: "dallas"
         }
-        api.fetchsignup(user)
+        api.fetchsignup(userinfo)
         .then (user => {
           state.userstate.id = user.id;
           state.userstate.email = user.email;
           state.userstate.city = user.city;
-          sessionStorage.setItem("email", `${u.email}`);
-          sessionStorage.setItem("city", `${u.city}`);
-          sessionStorage.setItem("id", `${u.id}`);
+          sessionStorage.setItem("email", `${user.email}`);
+          sessionStorage.setItem("city", `${user.city}`);
+          sessionStorage.setItem("id", `${user.id}`);
           state.userstate.renderMyAccount();
         })
       }

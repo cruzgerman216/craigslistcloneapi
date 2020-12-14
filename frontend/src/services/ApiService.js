@@ -3,7 +3,7 @@ class ApiService{
         this.url = url
     }
 
-    fetchallcategories = () => fetch(`${this.url}/categories`).then((resp) => resp.json())
+    fetchAllCategories = () => fetch(`${this.url}/categories`).then((resp) => resp.json())
 
     deleteUser = userId => fetch(`${this.url}/users/${userId}`,{method: 'DELETE'})
 

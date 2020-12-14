@@ -3,50 +3,47 @@ class UsersController < ApplicationController
 
   # GET /users
   def index
-    @users = User.all
+    users = User.all
 
-    render json: @users
+    render json: UserSerializer.new(users).to_serialized_json
   end
 
   # GET /users/1
   def show
-    render json: @user
+    user = User.find(params[:id])
+    render json: UserSerializer.new(user).to_serialized_json
   end
 
   # POST /users
   def create
-    puts params
-    @user = User.new(password: params["password"], email: params["email"], city: params["city"])
+    user = User.new(password: params["password"], email: params["email"], city: params["city"])
     
-    if @user.save
-      puts "created"
-      render json: @user, status: :created, location: @user
+    if user.save
+      render json: user, status: :created, location: user
     else
-      puts "error"
-      render json: @user.errors, status: :unprocessable_entity
+      render json: user.errors, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /users/1
   def update
-    if @user.update(user_params)
-      render json: @user
+    if user.update(user_params)
+      render json: UserSerializer.new(user).to_serialized_json
     else
-      render json: @user.errors, status: :unprocessable_entity
+      render json: user.errors, status: :unprocessable_entity
     end
   end
 
   # DELETE /users/1
   def destroy
-    @user.destroy
+    user.destroy
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_user
-      @user = User.find(params[:id])
-    end
-
+   # Use callbacks to share common setup or constraints between actions.
+   def set_user
+    user = User.find(params[:id])
+  end
     # Only allow a trusted parameter "white list" through.
     def user_params
       params.require(:user).permit(:password, :email)

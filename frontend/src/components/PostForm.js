@@ -183,7 +183,7 @@ class PostForm{
           document.querySelector(".createpost").innerHTML = "";
           document.querySelector(".createpost").style.display = "none";
           const postpage = new Post;
-          postpage.displaypost(post.id)
+          postpage.display(post.id)
         })
       
       }

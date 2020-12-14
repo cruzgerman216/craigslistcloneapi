@@ -81,7 +81,7 @@ class User {
               ${post.title}
             </div>
             <div class="col-2 mypostentry">
-              ${post.created_at}
+              ${post.updated_at}
             </div>
 
             <div class="col-1 mypostentry">
@@ -97,7 +97,7 @@ class User {
         if(event.target.attributes["name"].value =="delete"){
           post.deletepost(event.target.attributes["data-id"].value)
         }else if(event.target.attributes["name"].value =="display"){
-          post.displaypost(event.target.attributes["data-id"].value)
+          post.display(event.target.attributes["data-id"].value)
         }              
       }
     })

@@ -1,9 +1,9 @@
 class Home {
   constructor(){
     this.render();
+    this.getCategories();
     this.displayCalendar();
     this.getlocation();
-    this.getCategories();
     this.addEventListeners();
   }
 
@@ -88,10 +88,9 @@ class Home {
                 <div class="col-5" id="column-1">
                     <div>                  
                       <h5 class="subheaders link" name="community" data-id="1">community</h5>
-                      <div  class="container grid-container-two-column" id="category-1" id="category-1" style="font-size:12px; padding:0px;">
+                      <div  class="container grid-container-two-column" id="category-1" style="font-size:12px; padding:0px;">
                       </div>
                     </div>
-
                   <div>                  
                     <h5 class="subheaders link" name="services" data-id="1">services</h5>
                     <div class="container grid-container-two-column" id="category-61">
@@ -179,7 +178,7 @@ class Home {
     }
 
   getCategories() {
-    api.fetchallcategories()
+    api.fetchAllCategories()
     .then(categories => {
       categories.forEach(category=>{
         const parent_id = category.parent_id;
@@ -215,7 +214,7 @@ class Home {
       }
     })
 
-    document.getElementById("categories").addEventListener("click", (event)=>{
+    document.getElementById("categories").addEventListener("click", event =>{
       if(event.target.attributes["data-id"]){
         const category = {
            name: event.target.attributes["name"].value,
